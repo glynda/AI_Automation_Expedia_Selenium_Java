@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Cars" verbose="1">
+  <test name="Cars">
+    <classes>
+      <class name="com.expedia.automation.tests.CarsPageTest"/>
+    </classes>
+  </test>
+</suite>

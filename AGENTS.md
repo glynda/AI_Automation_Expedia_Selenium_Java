@@ -10,14 +10,14 @@ Selenium Java automation for the Expedia US homepage. The page is a search launc
 
 The visible form is not the submitted state. Search posts `form#lodging_search_form`. Location, dates, travelers, and package type are copied into hidden EGDS fields. Typing a destination leaves `EGDSSearchFormLocationField-Location-destination_form_field` and `EGDSSearchFormLocationField-Selected-destination_form_field` empty until a suggestion is chosen.
 
-Product tabs are links. Only the Stays form was reviewed.
+Product tabs are links, and clicking one swaps the form on `/`. Loading `/Flights` directly can show a bot check.
 
-- Stays → `/Hotels` (the form on `/`)
-- Flights → `/Flights`
-- Cars → `/Cars`
-- Packages → `/Vacation-Packages`
-- Things to do → `/Activities`
-- Cruises → `/Cruises`
+- Stays → `/Hotels`, form `lodging_search_form`
+- Flights → `/Flights`, form `flight-search-form` (one-way uses `EGDSSingleDatePicker-Date`)
+- Cars → `/Cars`, form `car_search_form`
+- Packages → `/Vacation-Packages`, form `package-search-form` (default name `packages-search-form-FLIGHT_HOTEL`)
+- Things to do → `/Activities`, form `activity-search-form`
+- Cruises → `/Cruises`, form `cruise_search_form`
 
 ## Stable controls
 
@@ -31,13 +31,19 @@ Prefer `data-stid` and the ids above. Generated ids (`id__…`) change between l
 
 ## Page chrome
 
-- Header in this session: logo `a[data-testid="header-brand-logo-anchor"]` and Sign in at `/user/signin`.
+- Header: logo `a[data-testid="header-brand-logo-anchor"]` and Sign in (`header [data-testid="header-menu-button"]`, or a link to `/login` or `/user/signin`). Do not open it.
 - An OneTrust cookie banner can cover the form. Its Close button dismisses it.
 - Modules under the hero (a hotel-offer band and a weekend-deals carousel) are personalized. This session received GraphQL `429` responses and stopped after those modules, with no footer. Assert the search form. Treat offers, prices, and everything below the hero as volatile.
 
 ## How
 
-The repo has no build yet. Add the Maven or Gradle commands here once they exist. Confirm a change on the live homepage: dismiss the cookie banner, choose a suggestion, then read the hidden fields before submit.
+Java 21, Selenium 4.52, TestNG 7.12. Page objects are in `src/main/java/com/expedia/automation/pages`. Suites are in `src/test/resources/suites`.
+
+- `mvn test` runs smoke.
+- `mvn test -Pregression` runs smoke and regression.
+- `mvn test -Phome` (also `flights`, `cars`, `packages`, `activities`, `cruises`) runs that page.
+
+Confirm a change on the live homepage: dismiss the cookie banner, switch tabs in the page, and read the hidden fields. Do not submit a search.
 
 ## Boundaries
 
