@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Home" verbose="1">
+  <test name="Home">
+    <classes>
+      <class name="com.expedia.automation.tests.HomePageTest"/>
+    </classes>
+  </test>
+</suite>

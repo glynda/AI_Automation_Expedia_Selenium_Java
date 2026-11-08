@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.expedia.automation</groupId>
+  <artifactId>AI_Automation_SauceDemo_Selenium_Java</artifactId>
+  <version>1.0.0</version>
+  <name>AI_Automation_SauceDemo_Selenium_Java</name>
+  <description>Selenium and TestNG coverage for the public Expedia search pages.</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <selenium.version>4.52.0</selenium.version>
+    <testng.version>7.12.0</testng.version>
+    <!-- 3.5.x still runs TestNG suite XML. 3.6+ rejects suiteXmlFiles. -->
+    <surefire.version>3.5.6</surefire.version>
+    <compiler.plugin.version>3.14.0</compiler.plugin.version>
+    <suiteXmlFile>src/test/resources/suites/smoke.xml</suiteXmlFile>
+    <base.url>https://www.expedia.com/</base.url>
+    <headless>false</headless>
+    <timeout.seconds>20</timeout.seconds>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.version}</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+          </suiteXmlFiles>
+          <systemPropertyVariables>
+            <base.url>${base.url}</base.url>
+            <headless>${headless}</headless>
+            <timeout.seconds>${timeout.seconds}</timeout.seconds>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>regression</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/regression.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>home</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/home.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>flights</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/flights.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>cars</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/cars.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>packages</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/packages.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>activities</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/activities.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
+      <id>cruises</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/suites/cruises.xml</suiteXmlFile>
+      </properties>
+    </profile>
+  </profiles>
+</project>
